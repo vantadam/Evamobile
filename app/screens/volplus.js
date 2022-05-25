@@ -246,7 +246,7 @@ const Volplus = ({ navigation, route }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          navigation.navigate("Results", {
+          navigation.navigate("VolResults", {
             search: "vol",
             adults,
             babies,

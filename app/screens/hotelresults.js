@@ -1,21 +1,21 @@
 import { ImageBackground, StyleSheet, Text } from "react-native";
 
-export default function Results({ route }) {
+export default function HotelResults({ route }) {
   const search = route.params.search;
-  const from = route.params.from;
-  const to = route.params.to;
+  const location = route.params.location;
   const adults = route.params.adults;
   const kids = route.params.kids;
   const teens = route.params.teens;
   const babies = route.params.babies;
   const date = route.params.date;
-  const classe = route.params.classe;
+  const end = route.params.end;
+  const rating = route.params.rating;
   const min = route.params.min;
   const max = route.params.max;
-  const flex = route.params.flex;
-  const time = route.params.time;
-  const airline = route.params.airline;
-  const depart = route.params.depart;
+  const room = route.params.room;
+  const roomNum = route.params.roomNum;
+  const arrangement = route.params.arrangement;
+
   return (
     <ImageBackground
       source={require("../assets/notifbg.png")}
@@ -26,11 +26,9 @@ export default function Results({ route }) {
         recherche: <Text style={styles.info}>{search}</Text>
       </Text>
       <Text style={styles.text}>
-        d'ou: <Text style={styles.info}>{from}</Text>
+        ou: <Text style={styles.info}>{location}</Text>
       </Text>
-      <Text style={styles.text}>
-        où aller: <Text style={styles.info}>{to}</Text>
-      </Text>
+
       <Text style={styles.text}>
         Adultes: <Text style={styles.info}>{adults}</Text> -Enfants:{" "}
         <Text style={styles.info}>{kids}</Text> -Jeunes:{" "}
@@ -41,7 +39,10 @@ export default function Results({ route }) {
         date: <Text style={styles.info}>{date}</Text>
       </Text>
       <Text style={styles.text}>
-        classe: <Text style={styles.info}>{classe}</Text>
+        a: <Text style={styles.info}>{end}</Text>
+      </Text>
+      <Text style={styles.text}>
+        rating: <Text style={styles.info}>{rating}</Text>
       </Text>
       <Text style={styles.text}>
         min: <Text style={styles.info}>{min}</Text>
@@ -50,14 +51,10 @@ export default function Results({ route }) {
         max: <Text style={styles.info}>{max}</Text>
       </Text>
       <Text style={styles.text}>
-        flexibilité: <Text style={styles.info}>{flex}</Text>
+        type de chambre: <Text style={styles.info}>{room}</Text>
       </Text>
       <Text style={styles.text}>
-        Horaire: <Text style={styles.info}>{time}</Text>
-      </Text>
-
-      <Text style={styles.text}>
-        compagnie: <Text style={styles.info}>{airline}</Text>
+        nombre des chambres : <Text style={styles.info}>{roomNum}</Text>
       </Text>
     </ImageBackground>
   );

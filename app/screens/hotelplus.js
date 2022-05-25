@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
   ImageBackground,
   TextInput,
 } from "react-native";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { TouchableOpacity } from "react-native";
 import Counter from "react-native-counters";
@@ -19,13 +18,36 @@ const plusIcon = (isPlusDisabled) => {
   return <AntDesign name="pluscircle" size={26} color="#f58f5a" />;
 };
 
-const Hotelplus = () => {
+const Hotelplus = ({ navigation, route }) => {
+  const location = route.params.location;
+  const date = route.params.date;
+  const end = route.params.end;
+  const adults = route.params.adults;
+  const kids = route.params.kids;
+  const teens = route.params.teens;
+  const babies = route.params.babies;
+  const rating = route.params.rating;
+
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: "eco", value: "eco" },
-    { label: "couch", value: "couch" },
+    { label: "single", value: "single" },
+    { label: "double", value: "double" },
+    { label: "Triple", value: "Triple" },
+    { label: "Quad", value: "Quad" },
+    { label: "Suite", value: "Suite" },
   ]);
+  const [room, setRoom] = useState(null);
+
+  const [open2, setOpen2] = useState(false);
+  const [value2, setValue2] = useState(null);
+  const [items2, setItems2] = useState([{ label: "", value: "" }]);
+  const [arrangement, setArrangement] = useState(null);
+
+  const [roomNum, setRoomNum] = useState(null);
+
   return (
     <ImageBackground
       source={require("../assets/volplus.png")}
@@ -40,7 +62,7 @@ const Hotelplus = () => {
               style={styles.TextInput}
               placeholder="min"
               placeholderTextColor="grey"
-              onChangeText={(username) => setUsername(username)}
+              onChangeText={(min) => setMin(min)}
               autoCapitalize="none"
             />
           </View>
@@ -55,6 +77,7 @@ const Hotelplus = () => {
               setItems={setItems}
               style={styles.DropDownPicker}
               textStyle={styles.droptext}
+              onChangeValue={(room) => setRoom(room)}
             />
           </View>
         </View>
@@ -64,21 +87,22 @@ const Hotelplus = () => {
               style={styles.TextInput}
               placeholder="max"
               placeholderTextColor="grey"
-              onChangeText={(username) => setUsername(username)}
+              onChangeText={(max) => setMax(max)}
               autoCapitalize="none"
             />
           </View>
           <View style={styles.drop}>
             <Text style={styles.minititle}>arrangement</Text>
             <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
+              open={open2}
+              value={value2}
+              items={items2}
+              setOpen={setOpen2}
+              setValue={setValue2}
+              setItems={setItems2}
               style={styles.DropDownPicker}
               textStyle={styles.droptext}
+              onChangeValue={(arrangement) => setArrangement(arrangement)}
             />
           </View>
         </View>
@@ -93,11 +117,32 @@ const Hotelplus = () => {
             plusIcon={plusIcon}
             countTextStyle={{ color: "#36446d", fontSize: "20" }}
             buttonStyle={{ borderColor: "transparent" }}
+            onChange={(roomNum) => setRoomNum(roomNum)}
           />
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate("HotelResults", {
+            search: "hotel",
+            adults,
+            babies,
+            teens,
+            kids,
+            location,
+            end,
+            date,
+            rating,
+            min,
+            max,
+            room,
+            roomNum,
+            arrangement,
+          })
+        }
+      >
         <Text style={styles.buttonText}> Confirmer </Text>
       </TouchableOpacity>
     </ImageBackground>

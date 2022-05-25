@@ -22,9 +22,23 @@ const plusIcon = (isPlusDisabled) => {
 };
 
 function Hotelsearch({ navigation }) {
-  const [date, setDate] = useState("09-10-2021");
-  const [from, setFrom] = useState("");
+  const getCurrentDate = () => {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
 
+    return date + "-" + month + "-" + year; //format: dd-mm-yyyy;
+  };
+
+  const [today] = useState(getCurrentDate);
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState(today);
+  const [end, setEnd] = useState(today);
+  const [adults, setAdults] = useState(0);
+  const [kids, setKids] = useState(0);
+  const [teens, setTeens] = useState(0);
+  const [babies, setBabies] = useState(0);
+  const [rating, setRating] = useState("tout");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -33,6 +47,7 @@ function Hotelsearch({ navigation }) {
     { label: "★★★", value: "3" },
     { label: "★★★★", value: "4" },
     { label: "★★★★★", value: "5" },
+    { label: "tout", value: "tout" },
   ]);
   return (
     <ImageBackground
@@ -50,7 +65,7 @@ function Hotelsearch({ navigation }) {
           style={styles.textinput}
           placeholder="recherche"
           placeholderTextColor="#D3D3D3"
-          onChangeText={(from) => setFrom(from)}
+          onChangeText={(location) => setLocation(location)}
           autoCapitalize="none"
         />
       </View>
@@ -63,7 +78,7 @@ function Hotelsearch({ navigation }) {
           mode="date"
           placeholder="select date"
           format="DD/MM/YYYY"
-          minDate="01-01-2022"
+          minDate={today}
           maxDate="01-01-2024"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
@@ -98,11 +113,11 @@ function Hotelsearch({ navigation }) {
         <Text style={styles.text}>Au :</Text>
         <DatePicker
           style={styles.datePickerStyle}
-          date={date}
+          date={end}
           mode="date"
           placeholder="select date"
           format="DD/MM/YYYY"
-          minDate="01-01-2022"
+          minDate={date}
           maxDate="01-01-2024"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
@@ -129,8 +144,8 @@ function Hotelsearch({ navigation }) {
               color: "white",
             },
           }}
-          onDateChange={(date) => {
-            setDate(date);
+          onDateChange={(end) => {
+            setEnd(end);
           }}
         />
       </View>
@@ -144,6 +159,7 @@ function Hotelsearch({ navigation }) {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(adults) => setAdults(adults)}
           />
         </View>
         <View style={styles.num}>
@@ -155,6 +171,7 @@ function Hotelsearch({ navigation }) {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(kids) => setKids(kids)}
           />
         </View>
       </View>
@@ -169,6 +186,7 @@ function Hotelsearch({ navigation }) {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(teens) => setTeens(teens)}
           />
         </View>
         <View style={styles.num}>
@@ -180,23 +198,39 @@ function Hotelsearch({ navigation }) {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(babies) => setBabies(babies)}
           />
         </View>
       </View>
       <View style={styles.drop}>
         <Text style={styles.classe}>Nombres d'étoiles</Text>
         <DropDownPicker
+          placeholder=""
           open={open}
           value={value}
           items={items}
           setOpen={setOpen}
           setValue={setValue}
           setItems={setItems}
+          onChangeValue={(rating) => {
+            setRating(rating);
+          }}
         />
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Hotelplus")}
+        onPress={() =>
+          navigation.navigate("Hotelplus", {
+            location,
+            date,
+            end,
+            adults,
+            babies,
+            teens,
+            kids,
+            rating,
+          })
+        }
       >
         <Text style={styles.buttonText}> Confirmer </Text>
       </TouchableOpacity>

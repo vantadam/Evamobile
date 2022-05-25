@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import DatePicker from "react-native-datepicker";
 import Counter from "react-native-counters";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -21,11 +15,21 @@ const plusIcon = (isPlusDisabled) => {
 };
 
 const Voldetails = ({ navigation, route }) => {
+  //params from previous page
   const from = route.params.from;
   const to = route.params.to;
 
+  const getCurrentDate = () => {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    return date + "-" + month + "-" + year; //format: dd-mm-yyyy;
+  };
+
+  const [today] = useState(getCurrentDate);
   const [classe, setClass] = useState("Economy");
-  const [date, setDate] = useState("09-10-2021");
+  const [date, setDate] = useState(getCurrentDate);
   const [adults, setAdults] = useState(0);
   const [kids, setKids] = useState(0);
   const [teens, setTeens] = useState(0);
@@ -53,7 +57,7 @@ const Voldetails = ({ navigation, route }) => {
           mode="date"
           placeholder="select date"
           format="DD/MM/YYYY"
-          minDate="01-01-2022"
+          minDate={today}
           maxDate="01-01-2024"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"

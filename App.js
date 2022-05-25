@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, LightTheme } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import Login from "./app/screens/login";
 import Signup from "./app/screens/signup";
 import Home from "./app/screens/home";
@@ -19,14 +19,15 @@ import Notif from "./app/screens/notif";
 import Reservations from "./app/screens/reservations";
 import Volplus from "./app/screens/volplus";
 import Hotelplus from "./app/screens/hotelplus";
-import Results from "./app/screens/results";
+import VolResults from "./app/screens/volresults";
+import HotelResults from "./app/screens/hotelresults";
 
 const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Volsearch"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Login" component={Login} />
@@ -46,7 +47,8 @@ const App = () => {
         <Stack.Screen name="Carte" component={Carte} />
         <Stack.Screen name="Notif" component={Notif} />
         <Stack.Screen name="Reservations" component={Reservations} />
-        <Stack.Screen name="Results" component={Results} />
+        <Stack.Screen name="VolResults" component={VolResults} />
+        <Stack.Screen name="HotelResults" component={HotelResults} />
       </Stack.Navigator>
     </NavigationContainer>
   );

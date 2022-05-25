@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import "react-native-gesture-handler";
 import { authentication, db } from "../../firebase/firebase-config";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore/lite";
 import * as ImagePicker from "expo-image-picker";
 
 export default function Options({ navigation }) {
@@ -19,6 +18,7 @@ export default function Options({ navigation }) {
   const [display, setImageDisplay] = useState(
     "https://www.transparenttextures.com/patterns/concrete-wall.png"
   );
+  const [imagemsg, setImagemsg] = useState("Modifier l'image");
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -34,6 +34,7 @@ export default function Options({ navigation }) {
     if (!result.cancelled) {
       setImage(result.uri);
       setImageDisplay(result.uri);
+      setImagemsg("");
     }
   };
 
@@ -61,6 +62,7 @@ export default function Options({ navigation }) {
           }}
           style={styles.image}
         />
+        <Text style={styles.imagemsg}>{imagemsg}</Text>
         <Image
           source={{
             uri: display,
@@ -111,6 +113,15 @@ const styles = StyleSheet.create({
     height: 148,
     bottom: 146,
     borderRadius: 200,
+  },
+  imagemsg: {
+    alignSelf: "center",
+    top: "30%",
+    position: "absolute",
+    textAlign: "center",
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "grey",
   },
   inputView: {
     backgroundColor: "#fff",

@@ -47,6 +47,10 @@ export default function User({ navigation }) {
       <View style={styles.avatar}>
         <View style={styles.stroke}>
           <Image
+            source={require("../assets/avatar.png")}
+            style={styles.default}
+          />
+          <Image
             source={{
               uri: image,
             }}
@@ -152,5 +156,12 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     top: "2.5%",
     borderRadius: 200,
+  },
+  default: {
+    alignSelf: "center",
+    width: "90%",
+    height: "90%",
+    position: "absolute",
+    top: "2.5%",
   },
 });
