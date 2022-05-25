@@ -19,6 +19,7 @@ import Notif from "./app/screens/notif";
 import Reservations from "./app/screens/reservations";
 import Volplus from "./app/screens/volplus";
 import Hotelplus from "./app/screens/hotelplus";
+import Results from "./app/screens/results";
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
         <Stack.Screen name="Carte" component={Carte} />
         <Stack.Screen name="Notif" component={Notif} />
         <Stack.Screen name="Reservations" component={Reservations} />
+        <Stack.Screen name="Results" component={Results} />
       </Stack.Navigator>
     </NavigationContainer>
   );

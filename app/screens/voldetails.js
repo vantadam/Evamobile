@@ -20,21 +20,33 @@ const plusIcon = (isPlusDisabled) => {
   return <AntDesign name="pluscircle" size={26} color="#f58f5a" />;
 };
 
-const Voldetails = ({ navigation }) => {
+const Voldetails = ({ navigation, route }) => {
+  const from = route.params.from;
+  const to = route.params.to;
+
+  const [classe, setClass] = useState("Economy");
   const [date, setDate] = useState("09-10-2021");
+  const [adults, setAdults] = useState(0);
+  const [kids, setKids] = useState(0);
+  const [teens, setTeens] = useState(0);
+  const [babies, setBabies] = useState(0);
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: "eco", value: "eco" },
-    { label: "couch", value: "couch" },
+    { label: "Economy", value: "Economy" },
+    { label: "Premium Economy", value: "Premium Economy" },
+    { label: "Business", value: "Business" },
+    { label: "First Class", value: "First Class" },
   ]);
+
   return (
     <ImageBackground
       source={require("../assets/voldebg.png")}
       style={styles.container}
     >
       <View style={styles.calendar}>
-        <Text style={styles.text}>Date :</Text>
+        <Text style={styles.text}>Date</Text>
         <DatePicker
           style={styles.datePickerStyle}
           date={date}
@@ -85,6 +97,7 @@ const Voldetails = ({ navigation }) => {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(adults) => setAdults(adults)}
           />
         </View>
         <View style={styles.num}>
@@ -96,6 +109,7 @@ const Voldetails = ({ navigation }) => {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(kids) => setKids(kids)}
           />
         </View>
       </View>
@@ -110,6 +124,7 @@ const Voldetails = ({ navigation }) => {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(teens) => setTeens(teens)}
           />
         </View>
         <View style={styles.num}>
@@ -121,6 +136,7 @@ const Voldetails = ({ navigation }) => {
             plusIcon={plusIcon}
             countTextStyle={{ color: "white", fontSize: "20" }}
             buttonStyle={{ borderColor: "#36446d" }}
+            onChange={(babies) => setBabies(babies)}
           />
         </View>
       </View>
@@ -134,11 +150,25 @@ const Voldetails = ({ navigation }) => {
           setOpen={setOpen}
           setValue={setValue}
           setItems={setItems}
+          onChangeValue={(classe) => {
+            setClass(classe);
+          }}
         />
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Volplus")}
+        onPress={() =>
+          navigation.navigate("Volplus", {
+            adults,
+            babies,
+            teens,
+            kids,
+            from,
+            to,
+            date,
+            classe,
+          })
+        }
       >
         <Text style={styles.buttonText}> Confirmer </Text>
       </TouchableOpacity>
@@ -207,7 +237,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   button: {
-    elevation: 8,
+    elevation: 1,
     backgroundColor: "#f58f5a",
     borderRadius: 10,
     paddingHorizontal: 12,

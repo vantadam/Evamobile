@@ -45,7 +45,8 @@
     "react-native-searchbar": "^1.16.0",
     "react-native-unsplash": "^0.0.9",
     "react-native-web": "0.17.1",
-    "translate": "^1.4.1"
+    "translate": "^1.4.1",
+    "@react-native-community/datetimepicker": "4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

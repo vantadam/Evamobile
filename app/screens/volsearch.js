@@ -5,16 +5,15 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useState } from "react";
-import { BorderlessButton } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
 
 export default function Volsearch({ navigation }) {
   const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
   return (
     <ImageBackground
@@ -51,14 +50,14 @@ export default function Volsearch({ navigation }) {
           style={styles.TextInput}
           placeholder="   recherche"
           placeholderTextColor="#D3D3D3"
-          onChangeText={(from) => setFrom(from)}
+          onChangeText={(to) => setTo(to)}
           autoCapitalize="none"
         />
       </View>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Voldetails")}
+        onPress={() => navigation.navigate("Voldetails", { from, to })}
       >
         <Text style={styles.buttonText}> Confirmer </Text>
       </TouchableOpacity>
