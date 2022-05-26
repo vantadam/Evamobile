@@ -159,9 +159,9 @@ const styles = StyleSheet.create({
   },
   default: {
     alignSelf: "center",
-    width: "90%",
-    height: "90%",
+    width: "92%",
+    height: "92%",
     position: "absolute",
-    top: "2.5%",
+    top: "4%",
   },
 });
