@@ -21,9 +21,14 @@ import Volplus from "./app/screens/volplus";
 import Hotelplus from "./app/screens/hotelplus";
 import VolResults from "./app/screens/volresults";
 import HotelResults from "./app/screens/hotelresults";
+import Ads from "./app/screens/ads";
+import { Linking, Platform } from "react-native";
 
 const Stack = createStackNavigator();
 const App = () => {
+  const [isReady, setIsReady] = React.useState(false);
+  const [initialState, setInitialState] = React.useState();
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -49,6 +54,7 @@ const App = () => {
         <Stack.Screen name="Reservations" component={Reservations} />
         <Stack.Screen name="VolResults" component={VolResults} />
         <Stack.Screen name="HotelResults" component={HotelResults} />
+        <Stack.Screen name="Ads" component={Ads} />
       </Stack.Navigator>
     </NavigationContainer>
   );

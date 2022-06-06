@@ -1,3 +1,4 @@
+import React, { Component, useState } from "react";
 import { ImageBackground, StyleSheet, Text } from "react-native";
 
 export default function VolResults({ route }) {
@@ -16,6 +17,71 @@ export default function VolResults({ route }) {
   const time = route.params.time;
   const airline = route.params.airline;
   const depart = route.params.depart;
+  const [data, setData] = useState([]);
+  const auth_token =
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY1NDYxMzI3OH0.WUhWoABgwaylt6tQqHc9e5S_px7J3rPJrdLQF500TzOUuKFdp7U1Ba5uBHAY84jgMBn8ovGbrCdxB_ThqOLFAg";
+  try {
+    fetch("http://217.182.175.100:8383/services/evaprovider/api/vols", {
+      method: "post",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth_token}`,
+      }),
+      body: JSON.stringify({
+        directFlightsOnly: true,
+        originDestinationInformation: [
+          {
+            id: "1",
+            destinationLocation: {
+              codeContext: "NYC",
+              locationCode: "NYC",
+              value: "NYC",
+            },
+            originLocation: {
+              codeContext: "PAR",
+              locationCode: "PAR",
+            },
+            departureDateTime: {
+              value: "07-06-2022",
+            },
+          },
+        ],
+        primaryLangID: "GB",
+        travelPreferences: {
+          cabinPref: [
+            {
+              cabinSubtype: "M",
+              cabin: "ECONOMY",
+            },
+          ],
+          end: null,
+          start: null,
+        },
+        travelerInfoSummary: {
+          airTravelerAvail: [
+            {
+              passengerTypeQuantity: [
+                {
+                  id: "1",
+                  code: "ADT",
+                  quantity: "1",
+                },
+              ],
+            },
+          ],
+          priceRequestInformation: {},
+        },
+        tripType: "ONE_WAY",
+        codeProvider: "AMADEUS",
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => setData(json));
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+  }
+
   return (
     <ImageBackground
       source={require("../assets/notifbg.png")}

@@ -63,7 +63,7 @@ function Hotelsearch({ navigation }) {
         />
         <TextInput
           style={styles.textinput}
-          placeholder="recherche"
+          placeholder="Location..."
           placeholderTextColor="#D3D3D3"
           onChangeText={(location) => setLocation(location)}
           autoCapitalize="none"

@@ -17,15 +17,32 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
 import { authentication } from "../../firebase/firebase-config";
+import { firebase } from "@react-native-firebase/auth";
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
   const [user, setUser] = useState("");
+
+  const [logState, setLogState] = useState(false);
+
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    setUser(authentication.currentUser.displayName);
+    setLogState(authentication.currentUser);
+
+    if (logState) {
+      setUser(authentication.currentUser.displayName);
+    } else {
+      setUser("");
+    }
   }, [isFocused]);
 
+  function userNavigation() {
+    if (!logState) {
+      navigation.navigate("Login");
+    } else {
+      navigation.navigate("User");
+    }
+  }
   return (
     <View style={styles.bg}>
       <View style={styles.head}>
@@ -35,12 +52,10 @@ export default function Home({ navigation }) {
         >
           <Ionicons name="notifications" size={24} color="#f58f5a" />
         </TouchableOpacity>
-        <Text style={styles.welcome}> bienvenue! </Text>
-        <Text style={styles.email}>{user} </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("User")}
-          style={styles.user}
-        >
+
+        <Text style={styles.welcome}> bienvenue! {user}</Text>
+
+        <TouchableOpacity onPress={() => userNavigation()} style={styles.user}>
           <AntDesign name="user" size={25} color="#f58f5a" />
         </TouchableOpacity>
       </View>
@@ -145,39 +160,68 @@ export default function Home({ navigation }) {
           Nous Offres
         </Text>
         <ScrollView horizontal style={styles.offers}>
-          <Image
-            source={require("../assets/deal.jpg")}
-            style={{
-              width: 200,
-              height: 200,
-              marginRight: 25,
-              top: 30,
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Ads", {
+                headline: "Best Deals Mahdia",
+                ad: "../assets/deal.jpg",
+              })
+            }
+          >
+            <Image
+              source={require("../assets/deal.jpg")}
+              style={{
+                width: 200,
+                height: 200,
+                marginRight: 25,
+                top: 30,
 
-              borderRadius: 20,
-            }}
-          />
-          <Image
-            source={require("../assets/deal1.jpg")}
-            style={{
-              width: 200,
-              height: 200,
-              marginRight: 25,
-              top: 30,
+                borderRadius: 20,
+              }}
+            />
+          </TouchableOpacity>
 
-              borderRadius: 20,
-            }}
-          />
-          <Image
-            source={require("../assets/deal2.jpg")}
-            style={{
-              width: 200,
-              height: 200,
-              marginRight: 25,
-              top: 30,
-              marginRight: 25,
-              borderRadius: 20,
-            }}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Ads", {
+                headline: "Decouvrez Le Japan",
+                ad: "../assets/deal1.jpg",
+              })
+            }
+          >
+            <Image
+              source={require("../assets/deal1.jpg")}
+              style={{
+                width: 200,
+                height: 200,
+                marginRight: 25,
+                top: 30,
+
+                borderRadius: 20,
+              }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Ads", {
+                headline: "Weekend Deals !!",
+                ad: "../assets/deal2.jpg",
+              })
+            }
+          >
+            <Image
+              source={require("../assets/deal2.jpg")}
+              style={{
+                width: 200,
+                height: 200,
+                marginRight: 25,
+                top: 30,
+                marginRight: 25,
+                borderRadius: 20,
+              }}
+            />
+          </TouchableOpacity>
         </ScrollView>
       </View>
       <TouchableOpacity
@@ -211,18 +255,15 @@ const styles = StyleSheet.create({
     width: "95%",
     height: 250,
   },
-  email: {
-    fontSize: 15,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    color: "white",
-    marginRight: "20%",
-  },
+
   welcome: {
     fontSize: 15,
     fontWeight: "bold",
     color: "white",
-    marginLeft: "20%",
+    alignSelf: "center",
+
+    width: "70%",
+    textAlign: "center",
   },
 
   mail: {

@@ -95,7 +95,7 @@ export default function User({ navigation }) {
           style={styles.icon}
         />
 
-        <Text style={styles.settext}> Options </Text>
+        <Text style={styles.settext}> Compte </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.setlast} onPress={() => Confirm()}>
         <AntDesign name="user" size={24} color="#f58f5a" style={styles.icon} />

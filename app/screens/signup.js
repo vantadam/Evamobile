@@ -10,13 +10,6 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { authentication, db } from "../../firebase/firebase-config";
-import {
-  collection,
-  getDocs,
-  setDoc,
-  doc,
-  Firestore,
-} from "firebase/firestore/lite";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function Signup({ navigation }) {
