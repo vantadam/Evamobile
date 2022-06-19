@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
-import { countryList } from "./countries";
-
+import { countryList } from "../assets/countries";
+import { closestMatch } from "closest-match";
 export function Discover({ navigation }) {
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
@@ -36,11 +36,7 @@ export function Discover({ navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            if (
-              countryList.includes(
-                search.charAt(0).toUpperCase() + search.slice(1)
-              )
-            ) {
+            if (countryList.includes(search.toLowerCase())) {
               navigation.navigate("Images", search);
               setError("");
             } else {
@@ -78,10 +74,10 @@ const styles = StyleSheet.create({
 
   TextInput: {
     fontSize: 15,
-    height: 50,
-    flex: 2,
-    padding: 10,
-    alignSelf: "center",
+    height: "100%",
+
+    width: "100%",
+    textAlign: "center",
   },
   buttoncontain: {
     height: "77%",

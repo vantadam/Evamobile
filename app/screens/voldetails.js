@@ -24,13 +24,13 @@ const Voldetails = ({ navigation, route }) => {
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
 
-    return date + "-" + month + "-" + year; //format: dd-mm-yyyy;
+    return year + "-" + month + "-" + date; //format: yyyy-mm-dd;
   };
 
   const [today] = useState(getCurrentDate);
   const [classe, setClass] = useState("Economy");
   const [date, setDate] = useState(getCurrentDate);
-  const [adults, setAdults] = useState(0);
+  const [adults, setAdults] = useState(1);
   const [kids, setKids] = useState(0);
   const [teens, setTeens] = useState(0);
   const [babies, setBabies] = useState(0);
@@ -38,10 +38,42 @@ const Voldetails = ({ navigation, route }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: "Economy", value: "Economy" },
-    { label: "Premium Economy", value: "Premium Economy" },
-    { label: "Business", value: "Business" },
-    { label: "First Class", value: "First Class" },
+    {
+      label: "Economy",
+      value: [
+        {
+          cabinSubtype: "M",
+          cabin: "ECONOMY",
+        },
+      ],
+    },
+    {
+      label: "Premium Economy",
+      value: [
+        {
+          cabinSubtype: "W",
+          cabin: "BUISNESS",
+        },
+      ],
+    },
+    {
+      label: "Business",
+      value: [
+        {
+          cabinSubtype: "W",
+          cabin: "BUISNESS",
+        },
+      ],
+    },
+    {
+      label: "First Class",
+      value: [
+        {
+          cabinSubtype: "F",
+          cabin: "FIRST",
+        },
+      ],
+    },
   ]);
 
   return (
@@ -49,6 +81,16 @@ const Voldetails = ({ navigation, route }) => {
       source={require("../assets/voldebg.png")}
       style={styles.container}
     >
+      <Text
+        style={{
+          color: "black",
+          fontSize: 20,
+          backgroundColor: "red",
+          bottom: "10%",
+        }}
+      >
+        {from}
+      </Text>
       <View style={styles.calendar}>
         <Text style={styles.text}>Date</Text>
         <DatePicker
@@ -56,9 +98,9 @@ const Voldetails = ({ navigation, route }) => {
           date={date}
           mode="date"
           placeholder="select date"
-          format="DD/MM/YYYY"
+          format="YYYY-MM-DD"
           minDate={today}
-          maxDate="01-01-2024"
+          maxDate="2024-01-01"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           iconComponent={
@@ -95,7 +137,7 @@ const Voldetails = ({ navigation, route }) => {
         <View style={styles.num}>
           <Text style={styles.agetext}>Adultes</Text>
           <Counter
-            start={0}
+            start={1}
             max={9}
             minusIcon={minusIcon}
             plusIcon={plusIcon}

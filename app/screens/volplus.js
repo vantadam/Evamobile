@@ -19,6 +19,41 @@ const Volplus = ({ navigation, route }) => {
   const babies = route.params.babies;
   const date = route.params.date;
   const classe = route.params.classe;
+  var i = 0;
+  const passengers = [];
+  if (adults != 0) {
+    passengers[i] = {
+      id: (i + 1).toString(),
+      code: "ADT",
+      quantity: adults.toString(),
+    };
+    i++;
+  }
+  if (teens != 0) {
+    passengers[i] = {
+      id: (i + 1).toString(),
+      code: "YTH",
+      quantity: kids.toString(),
+    };
+    i++;
+  }
+  if (kids != 0) {
+    passengers[i] = {
+      id: (i + 1).toString,
+      code: "CHD",
+      quantity: kids.toString(),
+    };
+    i++;
+  }
+  if (babies != 0) {
+    passengers[i] = {
+      id: (i + 1).toString(),
+      code: "INF",
+      quantity: babies.toString(),
+    };
+    i++;
+  }
+  console.log(passengers);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -248,10 +283,7 @@ const Volplus = ({ navigation, route }) => {
         onPress={() =>
           navigation.navigate("VolResults", {
             search: "vol",
-            adults,
-            babies,
-            teens,
-            kids,
+            passengers,
             from,
             to,
             date,

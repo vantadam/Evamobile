@@ -118,7 +118,7 @@ export function Images({ navigation, route }) {
         }}
       />
       <TouchableOpacity
-        onPress={() => navigation.navigate("Discover")}
+        onPress={() => navigation.navigate("Country", { search })}
         style={{
           position: "absolute",
           bottom: 30,
@@ -134,12 +134,6 @@ export function Images({ navigation, route }) {
             alignItems: "center",
           }}
         >
-          <Ionicons
-            name="arrow-back-circle-sharp"
-            size={25}
-            color="white"
-            style={{ top: 1 }}
-          />
           <Text
             style={{
               fontSize: 25,
@@ -150,6 +144,12 @@ export function Images({ navigation, route }) {
           >
             {search}
           </Text>
+          <Ionicons
+            name="arrow-forward-circle-sharp"
+            size={25}
+            color="white"
+            style={{ top: 1 }}
+          />
         </View>
       </TouchableOpacity>
     </View>
