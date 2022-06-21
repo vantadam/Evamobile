@@ -25,6 +25,9 @@ export default class VolResults extends Component {
     const date = this.props.route.params.date;
     const cabinpref = this.props.route.params.classe;
     const passengers = this.props.route.params.passengers;
+    const origin = this.props.route.params.from;
+    const destination = this.props.route.params.to;
+
     fetch("http://217.182.175.100:8383/services/evaprovider/api/vols", {
       method: "post",
       headers: new Headers({
@@ -38,13 +41,13 @@ export default class VolResults extends Component {
           {
             id: "1",
             destinationLocation: {
-              codeContext: "PAR",
-              locationCode: "PAR",
-              value: "PAR",
+              codeContext: destination,
+              locationCode: destination,
+              value: destination,
             },
             originLocation: {
-              codeContext: "TUN",
-              locationCode: "TUN",
+              codeContext: origin,
+              locationCode: origin,
             },
             departureDateTime: {
               value: date,
@@ -77,11 +80,16 @@ export default class VolResults extends Component {
             responseJson.originDestinationInformation[0]
               .originDestinationOptions.originDestinationOption,
         });
-        console.log(response);
+        console.log(dataSource);
       });
   }
 
   _renderItem = ({ item, index }) => {
+    const adults = this.props.route.params.adults;
+    const kids = this.props.route.params.kids;
+    const babies = this.props.route.params.babies;
+    const teens = this.props.route.params.teens;
+
     if (item != undefined && item != []) {
       var flight = item.flightSegment;
       if (flight[0] != undefined) {
@@ -99,9 +107,31 @@ export default class VolResults extends Component {
           case "AF":
             var company = "Air France";
             break;
+          case "BF":
+            var company = "Bluebird Nordic";
+            break;
+          case "TX":
+            var company = "Air Caraibes";
+            break;
+          case "LH":
+            var company = "Lufthansa";
+            break;
+          default:
+            var company = airline;
         }
+
         return (
-          <TouchableOpacity style={styles.result}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate("Passengers", {
+                adults,
+                teens,
+                kids,
+                babies,
+              })
+            }
+            style={styles.result}
+          >
             <View style={styles.line1}>
               <Text style={styles.amount}>
                 {item.pricingOverview.fareInfo.totalFare.amount} TND
@@ -127,7 +157,7 @@ export default class VolResults extends Component {
                   5
                 )}
               </Text>
-              <Text style={styles.flightnmbr}>26545</Text>
+              <Text style={styles.flightnmbr}>{flight[0].flightNumber}</Text>
             </View>
           </TouchableOpacity>
         );
@@ -138,6 +168,7 @@ export default class VolResults extends Component {
   render() {
     let { container } = styles;
     let { dataSource, isLoading } = this.state;
+
     if (isLoading) {
       return (
         <ImageBackground

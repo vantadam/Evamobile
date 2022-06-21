@@ -283,6 +283,10 @@ const Volplus = ({ navigation, route }) => {
         onPress={() =>
           navigation.navigate("VolResults", {
             search: "vol",
+            adults,
+            teens,
+            kids,
+            babies,
             passengers,
             from,
             to,

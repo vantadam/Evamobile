@@ -1,9 +1,10 @@
 export const cityList = [
+  "Aberdeen",
   "Paris",
   "Tunis",
   "Monastir",
   "Djerba",
-  "Lion",
   "New York",
   "Sydney",
+  "London",
 ];

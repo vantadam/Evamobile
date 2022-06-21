@@ -5,7 +5,7 @@ import Counter from "react-native-counters";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import DropDownPicker from "react-native-dropdown-picker";
 import { TouchableOpacity } from "react-native";
-
+import { cityCodes } from "../assets/citycodes";
 const minusIcon = (isDisabled) => {
   return <AntDesign name="minuscircle" size={26} color="#f58f5a" />;
 };
@@ -13,12 +13,19 @@ const minusIcon = (isDisabled) => {
 const plusIcon = (isPlusDisabled) => {
   return <AntDesign name="pluscircle" size={26} color="#f58f5a" />;
 };
-
+//finding the codes for the city airports
 const Voldetails = ({ navigation, route }) => {
-  //params from previous page
-  const from = route.params.from;
-  const to = route.params.to;
-
+  const f = route.params.from;
+  const t = route.params.to;
+  for (let i in cityCodes) {
+    if (f == cityCodes[i].name) {
+      var from = cityCodes[i].code;
+    }
+    if (t == cityCodes[i].name) {
+      var to = cityCodes[i].code;
+    }
+  }
+  //function to always  set the default date as the current
   const getCurrentDate = () => {
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
@@ -47,15 +54,7 @@ const Voldetails = ({ navigation, route }) => {
         },
       ],
     },
-    {
-      label: "Premium Economy",
-      value: [
-        {
-          cabinSubtype: "W",
-          cabin: "BUISNESS",
-        },
-      ],
-    },
+
     {
       label: "Business",
       value: [
@@ -75,22 +74,14 @@ const Voldetails = ({ navigation, route }) => {
       ],
     },
   ]);
+  console.log(from);
+  console.log(to);
 
   return (
     <ImageBackground
       source={require("../assets/voldebg.png")}
       style={styles.container}
     >
-      <Text
-        style={{
-          color: "black",
-          fontSize: 20,
-          backgroundColor: "red",
-          bottom: "10%",
-        }}
-      >
-        {from}
-      </Text>
       <View style={styles.calendar}>
         <Text style={styles.text}>Date</Text>
         <DatePicker

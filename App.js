@@ -24,7 +24,7 @@ import HotelResults from "./app/screens/hotelresults";
 import Ads from "./app/screens/ads";
 import { Linking, Platform } from "react-native";
 import Country from "./app/screens/countrydetails";
-
+import { Passengers } from "./app/screens/passengers";
 const Stack = createStackNavigator();
 const App = () => {
   const [isReady, setIsReady] = React.useState(false);
@@ -33,7 +33,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Discover"
+        initialRouteName="Volsearch"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Login" component={Login} />
@@ -57,6 +57,7 @@ const App = () => {
         <Stack.Screen name="HotelResults" component={HotelResults} />
         <Stack.Screen name="Ads" component={Ads} />
         <Stack.Screen name="Country" component={Country} />
+        <Stack.Screen name="Passengers" component={Passengers} />
       </Stack.Navigator>
     </NavigationContainer>
   );
