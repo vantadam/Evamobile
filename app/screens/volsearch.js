@@ -14,9 +14,8 @@ import { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import * as Location from "expo-location";
 import { closestMatch } from "closest-match";
-
-import { cityList } from "../assets/cities";
 import { cityCodes } from "../assets/citycodes";
+import { cityList } from "../assets/cities";
 
 export default function Volsearch({ navigation }) {
   const [search1focus, setsearch1focus] = useState(false);
@@ -52,7 +51,27 @@ export default function Volsearch({ navigation }) {
 
     if (coords) {
       const { latitude, longitude } = coords;
-      alert({ latitude, longitude });
+      console.log({ latitude, longitude });
+
+      var closest = cityCodes[0];
+      var diflat = latitude - cityCodes[0].geo.lat;
+      diflat = Math.abs(diflat);
+      var diflon = longitude - cityCodes[0].geo.lon;
+      diflon = Math.abs(diflon);
+      var cdif = diflat + diflon;
+
+      for (let i in cityCodes) {
+        var diflat = latitude - cityCodes[i].geo.lat;
+        diflat = Math.abs(diflat);
+        var diflon = longitude - cityCodes[i].geo.lon;
+        diflon = Math.abs(diflon);
+        var dif = diflat + diflon;
+        if (dif < cdif) {
+          closest = cityCodes[i];
+          cdif = dif;
+        }
+      }
+      setFrom(closest.name);
     }
   }
   Keyboard.addListener("keyboardDidHide", () => {
@@ -208,7 +227,7 @@ export default function Volsearch({ navigation }) {
 const styles = StyleSheet.create({
   title: {
     position: "absolute",
-    top: "15%",
+    top: "12%",
     fontSize: 30,
     fontWeight: "bold",
     color: "white",
@@ -249,7 +268,7 @@ const styles = StyleSheet.create({
   where: {
     position: "absolute",
     width: "80%",
-    top: "55%",
+    top: "57%",
     height: 40,
     borderWidth: 2,
     borderColor: "white",
@@ -270,7 +289,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    bottom: "6%",
+    bottom: "2%",
 
     elevation: 8,
     backgroundColor: "#f58f5a",
@@ -294,7 +313,7 @@ const styles = StyleSheet.create({
   },
   list2: {
     position: "absolute",
-    top: "68%",
+    top: "72%",
     height: "15%",
     width: "75%",
 
@@ -302,7 +321,7 @@ const styles = StyleSheet.create({
   },
   list1: {
     position: "absolute",
-    top: "35%",
+    top: "37%",
     height: "12%",
     width: "75%",
   },
